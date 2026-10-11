@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="d-flex justify-content-between text-bg-dark p-3 rounded">
+  <h1>Panier d'achats</h1>
+  <p> ({{totalItems()}}) articles</p>
+</div>
+<ul class="list-group">
+ @for(element of items() ; track $index){
+<li class="list-group-item d-flex justify-content-between"><img [src]="element.photo"> 
+    <strong>{{element.name | titlecase}}</strong> 
+    <span> ID : #{{element.id}}</span> 
+    <span class="badge text-bg-warning">Prix : {{element.price}} DT</span>
+    <div class="input-group mb-3">
+      <div>
+        <button (click)="updateQuantity(element,1)">+</button>
+      </div>  
+      <input type="text" [value]="element.quantity" class="input-group-text">
+      <div>
+        <button (click)="updateQuantity(element,-1)">-</button>
+      </div>
+    </div>
+</li>
+} 
+
+</ul>
+<button  (click)="addItem()" class="btn btn-success"> + Ajouter une bouteille d'eau (0.7 DT) </button><br/>
+<input type="text" name="nomARTsupp" placeholder="Nom de l'article à supprimer." #ref>
+<button (click)="deleteItem(ref.value)" class="btn btn-danger">Supprimer</button>
+<div class="p-3 rounded" [class]="{'text-bg-warning':remise() != 0,'text-bg-dark':!(remise() != 0)}">
+   <p>Prix total des articles : {{totalPrice()}}</p>
+   @if(remise() != 0){
+      <p>Remise : -{{remise()}} DT</p>
+                  }
+   <strong> Prix Final : {{finalPrice()}}</strong>
+</div>
+</div>
+
+
